@@ -4,6 +4,7 @@
   "displayName": "CodeClipper",
   "description": "Quickly copy the current filename and selected line numbers to the clipboard (e.g., versions.js line 22-23) via the right-click context menu.",
   "version": "0.0.1",
+  "icon": "media/icon.png",
   "repository": {
     "type": "git",
     "url": "git@github.com:kanine/codeclipper.git"
@@ -19,6 +20,7 @@
   "files": [
     "out/extension.js",
     "out/extension.js.map",
+    "media/icon.png",
     "README.md",
     "CHANGELOG.md",
     "LICENSE",
