@@ -12,13 +12,16 @@
     "url": "https://github.com/kanine/codeclipper/issues"
   },
   "homepage": "https://github.com/kanine/codeclipper#readme",
+  "license": "MIT",
   "engines": {
     "vscode": "^1.118.0"
   },
   "files": [
-    "out/**",
+    "out/extension.js",
+    "out/extension.js.map",
     "README.md",
     "CHANGELOG.md",
+    "LICENSE",
     "package.json"
   ],
   "categories": [
@@ -52,7 +55,7 @@
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
     "test": "vscode-test",
-    "package:local": "vsce package --out codeclipper.vsix",
+    "package:local": "vsce package --out codeclipper.vsix --no-dependencies",
     "install:local": "code --install-extension codeclipper.vsix --force",
     "deploy:local": "npm run compile && npm run package:local && npm run install:local"
   },
