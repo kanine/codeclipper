@@ -10,4 +10,8 @@ Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how 
 
 ## [0.0.2]
 
-- Marketplace publication prep and release packaging updates
+- Removed README boilerplate and tightened the extension landing page
+
+## [0.0.3]
+
+- Removed private repository metadata from the Marketplace manifest

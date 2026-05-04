@@ -21,6 +21,14 @@ Copy a file name and selected line numbers from the editor context menu.
 
 ## Release Notes
 
+### 0.0.2
+
+- Removed README boilerplate and tightened the extension landing page.
+
+### 0.0.3
+
+- Removed private repository metadata from the Marketplace manifest.
+
 ### 0.0.1
 
 - Initial release with editor context-menu copy support.

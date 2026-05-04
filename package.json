@@ -3,16 +3,9 @@
   "publisher": "kanine",
   "displayName": "CodeClipper",
   "description": "Quickly copy the current filename and selected line numbers to the clipboard (e.g., versions.js line 22-23) via the right-click context menu.",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "icon": "media/icon.png",
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:kanine/codeclipper.git"
-  },
-  "bugs": {
-    "url": "https://github.com/kanine/codeclipper/issues"
-  },
-  "homepage": "https://github.com/kanine/codeclipper#readme",
+  "homepage": "https://marketplace.visualstudio.com/items?itemName=kanine.codeclipper",
   "license": "MIT",
   "engines": {
     "vscode": "^1.118.0"
