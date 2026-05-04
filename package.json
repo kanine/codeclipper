@@ -4,7 +4,6 @@
   "displayName": "CodeClipper",
   "description": "Quickly copy the current filename and selected line numbers to the clipboard (e.g., versions.js line 22-23) via the right-click context menu.",
   "version": "0.0.1",
-  "icon": "media/icon.svg",
   "repository": {
     "type": "git",
     "url": "git@github.com:kanine/codeclipper.git"
@@ -16,6 +15,12 @@
   "engines": {
     "vscode": "^1.118.0"
   },
+  "files": [
+    "out/**",
+    "README.md",
+    "CHANGELOG.md",
+    "package.json"
+  ],
   "categories": [
     "Other"
   ],
@@ -46,16 +51,20 @@
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
     "lint": "eslint src",
-    "test": "vscode-test"
+    "test": "vscode-test",
+    "package:local": "vsce package --out codeclipper.vsix",
+    "install:local": "code --install-extension codeclipper.vsix --force",
+    "deploy:local": "npm run compile && npm run package:local && npm run install:local"
   },
   "devDependencies": {
-    "@types/vscode": "^1.118.0",
     "@types/mocha": "^10.0.10",
     "@types/node": "22.x",
-    "typescript-eslint": "^8.56.1",
+    "@types/vscode": "^1.118.0",
+    "@vscode/test-cli": "^0.0.12",
+    "@vscode/test-electron": "^2.5.2",
+    "@vscode/vsce": "^3.9.1",
     "eslint": "^9.39.3",
     "typescript": "^5.9.3",
-    "@vscode/test-cli": "^0.0.12",
-    "@vscode/test-electron": "^2.5.2"
+    "typescript-eslint": "^8.56.1"
   }
 }
