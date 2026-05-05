@@ -18,7 +18,7 @@ All notable changes to CodeClipper are documented here.
 - **Select Prompt...** command: pick a prompt from a quick-pick list and copy it to the clipboard.
 - **Settings...** command: opens the CodeClipper settings page directly.
 - `{filename}` placeholder in prompts — resolves to file path and line numbers at copy time.
-- Six built-in prompts: Handoff, Explain Code, Code Review, Refactor, Write Tests, Bug Report.
+- Seven built-in prompts: Handoff, Explain Code, Code Review, Refactor, Write Tests, Bug Report, Run as prompt.
 - Context menu is now visible even without a text selection.
 
 ### Changed

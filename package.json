@@ -163,6 +163,11 @@
               "name": "Bug Report",
               "prompt": "Help me write a clear bug report for the following issue in {filename}. Include: a one-sentence summary, steps to reproduce, expected behavior, actual behavior, and any relevant context or environment details.",
               "active": true
+            },
+            {
+              "name": "Run as prompt",
+              "prompt": "Follow the instructions in {filename}. If there are lines referenced, treat only that section as the input; otherwise use the whole file.",
+              "active": true
             }
           ],
           "description": "List of named prompts available in CodeClipper: Select Prompt. Each item needs a short 'name' (shown in the menu) and a 'prompt' (copied to clipboard when selected)."

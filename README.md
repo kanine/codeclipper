@@ -62,6 +62,7 @@ The path style and line number format follow the `codeclipper.pathStyle` and `co
 | Refactor | Yes |
 | Write Tests | Yes |
 | Bug Report | Yes |
+| Run as prompt | Yes |
 
 ## Settings
 
