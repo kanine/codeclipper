@@ -3,7 +3,7 @@
   "publisher": "kanine",
   "displayName": "CodeClipper",
   "description": "Quickly copy the current filename and selected line numbers to the clipboard (e.g., versions.js line 22-23) via the right-click context menu.",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "icon": "media/icon.png",
   "homepage": "https://marketplace.visualstudio.com/items?itemName=kanine.codeclipper",
   "license": "MIT",
