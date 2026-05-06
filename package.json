@@ -3,7 +3,7 @@
   "publisher": "kanine",
   "displayName": "CodeClipper",
   "description": "Copy file references or prompt-ready instructions from the context menu, keyboard shortcut, or command palette.",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "icon": "media/icon.png",
   "homepage": "https://marketplace.visualstudio.com/items?itemName=kanine.codeclipper",
   "license": "MIT",
@@ -88,7 +88,10 @@
       "properties": {
         "codeclipper.format": {
           "type": "string",
-          "enum": ["words", "colon"],
+          "enum": [
+            "words",
+            "colon"
+          ],
           "enumDescriptions": [
             "example.ts line 22  /  example.ts lines 22-23",
             "example.ts:22  /  example.ts:22-23"
@@ -98,7 +101,11 @@
         },
         "codeclipper.pathStyle": {
           "type": "string",
-          "enum": ["basename", "relative", "full"],
+          "enum": [
+            "basename",
+            "relative",
+            "full"
+          ],
           "enumDescriptions": [
             "Filename only: example.ts",
             "Relative to workspace root: src/utils/example.ts",
@@ -116,7 +123,10 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["name", "prompt"],
+            "required": [
+              "name",
+              "prompt"
+            ],
             "properties": {
               "name": {
                 "type": "string",
