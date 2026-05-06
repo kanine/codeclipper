@@ -35,22 +35,36 @@ function resolveFilename(editor: vscode.TextEditor | undefined, config: vscode.W
     return formatReference(fileName, ranges, format);
 }
 
+function explorerCopy(uri: vscode.Uri, uris: vscode.Uri[] | undefined, config: vscode.WorkspaceConfiguration): void {
+    const targets = uris && uris.length > 1 ? uris : [uri];
+    const result = targets.map(u => resolveFilenameFromUri(u, config)).join('\n');
+    vscode.env.clipboard.writeText(result);
+    const label = targets.length > 1 ? `${targets.length} paths` : result;
+    vscode.window.showInformationMessage(`Copied: ${label}`);
+}
+
 export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
-        vscode.commands.registerCommand('copy-reference.copyLineRef', (uri?: vscode.Uri) => {
+        vscode.commands.registerCommand('copy-reference.copyLineRef', () => {
             const config = vscode.workspace.getConfiguration('codeclipper');
-            const result = uri
-                ? resolveFilenameFromUri(uri, config)
-                : resolveFilename(vscode.window.activeTextEditor, config);
+            const result = resolveFilename(vscode.window.activeTextEditor, config);
             vscode.env.clipboard.writeText(result);
             vscode.window.showInformationMessage(`Copied: ${result}`);
+        }),
+
+        vscode.commands.registerCommand('copy-reference.explorerCopyFile', (uri: vscode.Uri, uris?: vscode.Uri[]) => {
+            explorerCopy(uri, uris, vscode.workspace.getConfiguration('codeclipper'));
+        }),
+
+        vscode.commands.registerCommand('copy-reference.explorerCopyPath', (uri: vscode.Uri, uris?: vscode.Uri[]) => {
+            explorerCopy(uri, uris, vscode.workspace.getConfiguration('codeclipper'));
         }),
 
         vscode.commands.registerCommand('copy-reference.openSettings', () => {
             vscode.commands.executeCommand('workbench.action.openSettings', '@ext:kanine.codeclipper');
         }),
 
-        vscode.commands.registerCommand('copy-reference.selectPrompt', async (uri?: vscode.Uri) => {
+        vscode.commands.registerCommand('copy-reference.selectPrompt', async (uri?: vscode.Uri, _uris?: vscode.Uri[]) => {
             const config = vscode.workspace.getConfiguration('codeclipper');
             const prompts = (config.get<PromptItem[]>('prompts') ?? []).filter(p => p.active !== false);
 

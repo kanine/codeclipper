@@ -41,11 +41,25 @@
         "command": "copy-reference.openSettings",
         "title": "Settings...",
         "category": "CodeClipper"
+      },
+      {
+        "command": "copy-reference.explorerCopyFile",
+        "title": "Copy File Reference",
+        "category": "CodeClipper"
+      },
+      {
+        "command": "copy-reference.explorerCopyPath",
+        "title": "Copy Path",
+        "category": "CodeClipper"
       }
     ],
     "submenus": [
       {
         "id": "codeclipper.submenu",
+        "label": "CodeClipper"
+      },
+      {
+        "id": "codeclipper.explorerSubmenu",
         "label": "CodeClipper"
       }
     ],
@@ -59,7 +73,7 @@
       ],
       "explorer/context": [
         {
-          "submenu": "codeclipper.submenu",
+          "submenu": "codeclipper.explorerSubmenu",
           "when": "config.codeclipper.showInContextMenu",
           "group": "z_commands@1"
         }
@@ -67,6 +81,26 @@
       "codeclipper.submenu": [
         {
           "command": "copy-reference.copyLineRef",
+          "group": "1_actions@1"
+        },
+        {
+          "command": "copy-reference.selectPrompt",
+          "group": "1_actions@2"
+        },
+        {
+          "command": "copy-reference.openSettings",
+          "group": "9_settings@1"
+        }
+      ],
+      "codeclipper.explorerSubmenu": [
+        {
+          "command": "copy-reference.explorerCopyFile",
+          "when": "!explorerResourceIsFolder",
+          "group": "1_actions@1"
+        },
+        {
+          "command": "copy-reference.explorerCopyPath",
+          "when": "explorerResourceIsFolder",
           "group": "1_actions@1"
         },
         {
