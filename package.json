@@ -60,7 +60,7 @@
       "explorer/context": [
         {
           "submenu": "codeclipper.submenu",
-          "when": "!explorerResourceIsFolder && config.codeclipper.showInContextMenu",
+          "when": "config.codeclipper.showInContextMenu",
           "group": "z_commands@1"
         }
       ],
