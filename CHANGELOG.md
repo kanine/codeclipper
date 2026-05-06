@@ -4,6 +4,13 @@ All notable changes to CodeClipper are documented here.
 
 ## [Unreleased]
 
+## [0.0.7]
+
+### Added
+- CodeClipper submenu now appears in the Explorer file/folder context menu.
+- Right-clicking a file shows **Copy File Reference**; a folder shows **Copy Path**.
+- Multi-select support: select multiple files/folders and copy all paths at once (newline-separated).
+
 ## [0.0.6]
 
 ### Fixed
