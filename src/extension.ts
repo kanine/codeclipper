@@ -8,20 +8,22 @@ interface PromptItem {
     active?: boolean;
 }
 
+function applyPathStyle(fsPathOrDoc: string, uri: vscode.Uri | undefined, config: vscode.WorkspaceConfiguration): string {
+    const pathStyle = config.get<string>('pathStyle') ?? 'basename';
+    if (pathStyle === 'full') {return fsPathOrDoc;}
+    if (pathStyle === 'relative') {return vscode.workspace.asRelativePath(uri ?? fsPathOrDoc);}
+    return path.basename(fsPathOrDoc);
+}
+
+function resolveFilenameFromUri(uri: vscode.Uri, config: vscode.WorkspaceConfiguration): string {
+    return applyPathStyle(uri.fsPath, uri, config);
+}
+
 function resolveFilename(editor: vscode.TextEditor | undefined, config: vscode.WorkspaceConfiguration): string {
     if (!editor) {return '{filename}';}
 
-    const pathStyle = config.get<string>('pathStyle') ?? 'basename';
     const format = (config.get<string>('format') ?? 'words') as Format;
-
-    let fileName: string;
-    if (pathStyle === 'full') {
-        fileName = editor.document.fileName;
-    } else if (pathStyle === 'relative') {
-        fileName = vscode.workspace.asRelativePath(editor.document.fileName);
-    } else {
-        fileName = path.basename(editor.document.fileName);
-    }
+    const fileName = applyPathStyle(editor.document.fileName, editor.document.uri, config);
 
     const hasSelection = editor.selections.some(sel => !sel.isEmpty);
     if (!hasSelection) {return fileName;}
@@ -35,12 +37,11 @@ function resolveFilename(editor: vscode.TextEditor | undefined, config: vscode.W
 
 export function activate(context: vscode.ExtensionContext) {
     context.subscriptions.push(
-        vscode.commands.registerCommand('copy-reference.copyLineRef', () => {
-            const editor = vscode.window.activeTextEditor;
-            if (!editor) {return;}
-
+        vscode.commands.registerCommand('copy-reference.copyLineRef', (uri?: vscode.Uri) => {
             const config = vscode.workspace.getConfiguration('codeclipper');
-            const result = resolveFilename(editor, config);
+            const result = uri
+                ? resolveFilenameFromUri(uri, config)
+                : resolveFilename(vscode.window.activeTextEditor, config);
             vscode.env.clipboard.writeText(result);
             vscode.window.showInformationMessage(`Copied: ${result}`);
         }),
@@ -49,7 +50,7 @@ export function activate(context: vscode.ExtensionContext) {
             vscode.commands.executeCommand('workbench.action.openSettings', '@ext:kanine.codeclipper');
         }),
 
-        vscode.commands.registerCommand('copy-reference.selectPrompt', async () => {
+        vscode.commands.registerCommand('copy-reference.selectPrompt', async (uri?: vscode.Uri) => {
             const config = vscode.workspace.getConfiguration('codeclipper');
             const prompts = (config.get<PromptItem[]>('prompts') ?? []).filter(p => p.active !== false);
 
@@ -69,8 +70,10 @@ export function activate(context: vscode.ExtensionContext) {
             const selected = prompts.find(p => p.name === pick.label);
             if (!selected) {return;}
 
-            const editor = vscode.window.activeTextEditor;
-            const resolved = selected.prompt.replace(/\{filename\}/g, resolveFilename(editor, config));
+            const filename = uri
+                ? resolveFilenameFromUri(uri, config)
+                : resolveFilename(vscode.window.activeTextEditor, config);
+            const resolved = selected.prompt.replace(/\{filename\}/g, filename);
 
             await vscode.env.clipboard.writeText(resolved);
             vscode.window.showInformationMessage(`Copied: ${selected.name}`);
