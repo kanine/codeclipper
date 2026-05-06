@@ -4,6 +4,11 @@ All notable changes to CodeClipper are documented here.
 
 ## [Unreleased]
 
+## [0.0.6]
+
+### Fixed
+- `codeclipper.pathStyle: "relative"` (and `"full"`) now works correctly when copying a line reference — previously the path style setting was ignored and the basename was always used.
+
 ## [0.0.4]
 
 ### Added

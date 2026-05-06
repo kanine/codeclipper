@@ -39,16 +39,8 @@ export function activate(context: vscode.ExtensionContext) {
             const editor = vscode.window.activeTextEditor;
             if (!editor) {return;}
 
-            const fileName = path.basename(editor.document.fileName);
             const config = vscode.workspace.getConfiguration('codeclipper');
-            const format = (config.get<string>('format') ?? 'words') as Format;
-
-            const ranges: LineRange[] = editor.selections.map(sel => ({
-                start: sel.start.line + 1,
-                end: sel.end.line + 1,
-            }));
-
-            const result = formatReference(fileName, ranges, format);
+            const result = resolveFilename(editor, config);
             vscode.env.clipboard.writeText(result);
             vscode.window.showInformationMessage(`Copied: ${result}`);
         }),
