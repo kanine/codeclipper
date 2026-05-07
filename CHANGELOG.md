@@ -4,6 +4,22 @@ All notable changes to CodeClipper are documented here.
 
 ## [Unreleased]
 
+## [0.0.8]
+
+### Added
+- `{selection}` template variable in prompts — expands to the currently selected text.
+- `{clipboard}` template variable in prompts — expands to current clipboard contents.
+- **Debug Error** built-in prompt: paste an error from the clipboard and get an explanation and fix for the active file.
+- Keyboard shortcut `Ctrl+Alt+P` / `Cmd+Alt+P` for **Select Prompt...**.
+- Warning notification when a prompt uses `{filename}` but no file is active.
+
+### Changed
+- **Copy File and Line Reference** now always includes the cursor line number, even without a text selection — matches documented behaviour.
+- **Copy Path** (Explorer folder context menu) now copies the full absolute path, distinct from **Copy File Reference** which respects the `pathStyle` setting.
+
+### Fixed
+- `tsconfig.json` now explicitly declares `node` and `mocha` types, resolving VS Code IntelliSense false positives.
+
 ## [0.0.7]
 
 ### Added

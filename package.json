@@ -3,7 +3,7 @@
   "publisher": "kanine",
   "displayName": "CodeClipper",
   "description": "Copy file references or prompt-ready instructions from the context menu, keyboard shortcut, or command palette.",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "icon": "media/icon.png",
   "homepage": "https://marketplace.visualstudio.com/items?itemName=kanine.codeclipper",
   "license": "MIT",
