@@ -38,17 +38,25 @@ utils.ts:5-8, 20-25
 
 ### Select Prompt
 
-Open a searchable quick-pick list of named prompts. Select one and the full prompt text is copied to your clipboard — with `{filename}` automatically resolved to the active file and current selection.
+Open a searchable quick-pick list of named prompts. Select one and the full prompt text is copied to your clipboard — with template variables automatically resolved.
 
 Prompts are defined in your `settings.json` so they stay consistent across projects and sessions.
+
+**Template variables**
+
+| Variable | Resolved value |
+|---|---|
+| `{filename}` | File name + line reference (see below) |
+| `{selection}` | The currently selected text |
+| `{clipboard}` | The current clipboard contents |
 
 **`{filename}` resolution**
 
 | Editor state | Resolved value |
 |---|---|
-| No selection | `utils.ts` |
 | Cursor on line 42 | `utils.ts line 42` |
 | Selection across lines 42–58 | `utils.ts lines 42-58` |
+| Multi-cursor / multi-selection | `utils.ts lines 5-8, 20-25` |
 
 **Built-in prompts**
 
@@ -75,7 +83,7 @@ All commands are available via:
 | Command | Shortcut |
 |---|---|
 | Copy File and Line Reference | `Ctrl+Alt+C` / `Cmd+Alt+C` |
-| Select Prompt... | — |
+| Select Prompt... | `Ctrl+Alt+P` / `Cmd+Alt+P` |
 | Settings... | — |
 
 ---
@@ -93,11 +101,24 @@ All commands are available via:
 
 Add or override prompts in `settings.json`. Each entry requires a `name` and a `prompt`. Set `active: false` to hide a prompt without removing it.
 
+Three template variables are available inside `prompt` strings:
+
+| Variable | Expands to |
+|---|---|
+| `{filename}` | File name + line reference (`utils.ts line 42`) |
+| `{selection}` | The text currently selected in the editor |
+| `{clipboard}` | The current clipboard contents |
+
 ```json
 "codeclipper.prompts": [
   {
     "name": "Write Tests",
     "prompt": "Write tests for {filename}. Cover the happy path, edge cases, and expected failure modes.",
+    "active": true
+  },
+  {
+    "name": "Debug Error",
+    "prompt": "I'm seeing this error in {filename}:\n\n{clipboard}\n\nExplain what's causing it and suggest a fix.",
     "active": true
   },
   {

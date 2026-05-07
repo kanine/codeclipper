@@ -26,12 +26,10 @@ function resolveFilename(editor: vscode.TextEditor | undefined, config: vscode.W
     const fileName = applyPathStyle(editor.document.fileName, editor.document.uri, config);
 
     const hasSelection = editor.selections.some(sel => !sel.isEmpty);
-    if (!hasSelection) {return fileName;}
+    const ranges: LineRange[] = hasSelection
+        ? editor.selections.map(sel => ({ start: sel.start.line + 1, end: sel.end.line + 1 }))
+        : [{ start: editor.selection.active.line + 1, end: editor.selection.active.line + 1 }];
 
-    const ranges: LineRange[] = editor.selections.map(sel => ({
-        start: sel.start.line + 1,
-        end: sel.end.line + 1,
-    }));
     return formatReference(fileName, ranges, format);
 }
 
@@ -57,7 +55,11 @@ export function activate(context: vscode.ExtensionContext) {
         }),
 
         vscode.commands.registerCommand('copy-reference.explorerCopyPath', (uri: vscode.Uri, uris?: vscode.Uri[]) => {
-            explorerCopy(uri, uris, vscode.workspace.getConfiguration('codeclipper'));
+            const targets = uris && uris.length > 1 ? uris : [uri];
+            const result = targets.map(u => u.fsPath).join('\n');
+            vscode.env.clipboard.writeText(result);
+            const label = targets.length > 1 ? `${targets.length} paths` : result;
+            vscode.window.showInformationMessage(`Copied: ${label}`);
         }),
 
         vscode.commands.registerCommand('copy-reference.openSettings', () => {
@@ -84,10 +86,29 @@ export function activate(context: vscode.ExtensionContext) {
             const selected = prompts.find(p => p.name === pick.label);
             if (!selected) {return;}
 
+            const editor = vscode.window.activeTextEditor;
+
+            if (selected.prompt.includes('{filename}') && !editor && !uri) {
+                vscode.window.showWarningMessage('CodeClipper: no active file to resolve {filename}.');
+                return;
+            }
+
             const filename = uri
                 ? resolveFilenameFromUri(uri, config)
-                : resolveFilename(vscode.window.activeTextEditor, config);
-            const resolved = selected.prompt.replace(/\{filename\}/g, filename);
+                : resolveFilename(editor, config);
+
+            const selectionText = editor && !editor.selection.isEmpty
+                ? editor.document.getText(editor.selection)
+                : '';
+
+            const clipboardText = selected.prompt.includes('{clipboard}')
+                ? await vscode.env.clipboard.readText()
+                : '';
+
+            const resolved = selected.prompt
+                .replace(/\{filename\}/g, filename)
+                .replace(/\{selection\}/g, selectionText)
+                .replace(/\{clipboard\}/g, clipboardText);
 
             await vscode.env.clipboard.writeText(resolved);
             vscode.window.showInformationMessage(`Copied: ${selected.name}`);

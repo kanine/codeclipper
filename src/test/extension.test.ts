@@ -65,20 +65,6 @@ suite('formatReference — words format', () => {
         );
     });
 
-    test('no-selection / cursor-only (same as single-line)', () => {
-        assert.strictEqual(
-            formatReference('example.ts', [{ start: 22, end: 22 }]),
-            'example.ts line 22'
-        );
-    });
-
-    test('partial-line selection on one line outputs line number only', () => {
-        assert.strictEqual(
-            formatReference('example.ts', [{ start: 22, end: 22 }]),
-            'example.ts line 22'
-        );
-    });
-
     test('multi-cursor on separate lines merges into one reference', () => {
         assert.strictEqual(
             formatReference('example.ts', [{ start: 5, end: 5 }, { start: 20, end: 20 }]),

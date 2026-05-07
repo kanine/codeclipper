@@ -119,6 +119,12 @@
         "key": "ctrl+alt+c",
         "mac": "cmd+alt+c",
         "when": "editorTextFocus"
+      },
+      {
+        "command": "copy-reference.selectPrompt",
+        "key": "ctrl+alt+p",
+        "mac": "cmd+alt+p",
+        "when": "editorTextFocus"
       }
     ],
     "configuration": {
@@ -216,9 +222,14 @@
               "name": "Run as prompt",
               "prompt": "Follow the instructions in {filename}. If there are lines referenced, treat only that section as the input; otherwise use the whole file.",
               "active": true
+            },
+            {
+              "name": "Debug Error",
+              "prompt": "I'm seeing this error in {filename}:\n\n{clipboard}\n\nExplain what's causing it and suggest a fix.",
+              "active": true
             }
           ],
-          "description": "List of named prompts available in CodeClipper: Select Prompt. Each item needs a short 'name' (shown in the menu) and a 'prompt' (copied to clipboard when selected)."
+          "description": "List of named prompts available in CodeClipper: Select Prompt. Each item needs a short 'name' (shown in the menu) and a 'prompt' (copied to clipboard when selected). Template variables: {filename} (file + line reference), {selection} (selected text), {clipboard} (current clipboard contents)."
         }
       }
     }
